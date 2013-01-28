@@ -9,7 +9,7 @@ class MainPage(webapp2.RequestHandler):
       res= os.system("touch anand2.txt")
       #self.response.write(res) 
       self.response.write('printing the list of files in the directory using os.open call : \n') 
-      process = os.popen('ls')
+      process = os.popen('./StochKit2.0.6/ssa -m dimer_decay.xml -t 10 -r 1000')
       res= process.read()
       self.response.write(res)
       process.close()
