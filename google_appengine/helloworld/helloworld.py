@@ -2,7 +2,9 @@ import webapp2,os
 
 class MainPage(webapp2.RequestHandler):
   def get(self):
-      file = open("test.txt", 'w')	
+      file = open("test.txt", 'w')
+      file.write("test")
+      file.close()
       self.response.headers['Content-Type'] = 'text/plain'
       self.response.write('Hello, webapp2 World!\n')
       self.response.write('creating anand2.txt using os.system call : \n')
