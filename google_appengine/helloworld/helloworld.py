@@ -4,6 +4,8 @@ class MainPage(webapp2.RequestHandler):
   def get(self):
       file = open("test2.txt", 'w')	
       file.write("testing")
+      file = open("test.txt", 'w')
+      file.write("test")
       file.close()
       self.response.headers['Content-Type'] = 'text/plain'
       self.response.write('Hello, webapp2 World!\n')
