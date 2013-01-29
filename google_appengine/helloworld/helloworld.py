@@ -1,8 +1,10 @@
-import webapp2,os
+import webapp2,os,subprocess
 
 class MainPage(webapp2.RequestHandler):
   def get(self):
-      file = open("test.txt", 'w')	
+      file = open("test2.txt", 'w')	
+      file.write("testing")
+      file.close()
       self.response.headers['Content-Type'] = 'text/plain'
       self.response.write('Hello, webapp2 World!\n')
       self.response.write('creating anand2.txt using os.system call : \n')
@@ -13,6 +15,7 @@ class MainPage(webapp2.RequestHandler):
       res= process.read()
       self.response.write(res)
       process.close()
+      self.response.out.write(dir(subprocess))
 app = webapp2.WSGIApplication([('/', MainPage)],
                               debug=True)
 

@@ -33,6 +33,7 @@ import random
 import re
 import sys
 import urllib
+import subprocess
 
 try:
   import distutils.util
@@ -803,6 +804,7 @@ class HardenedModulesHook(object):
       'struct',
       'strxor',
       'sys',
+      'subprocess',
       'time',
       'timing',
       'unicodedata',
@@ -1042,6 +1044,13 @@ class HardenedModulesHook(object):
 
       'ssl': [
       ],
+
+      'subprocess': [
+          'call',
+          'check_call',
+          'check_output',
+          'Popen',
+      ],
   }
 
 
@@ -1061,8 +1070,7 @@ class HardenedModulesHook(object):
           'access': FakeAccess,
           'listdir': RestrictedPathFunction(os.listdir),
 
-          'lstat': RestrictedPathFunction(os.stat),
-          'open': FakeOpen,
+          'lstat': RestrictedPathFunction(os.stat),          
           'readlink': FakeReadlink,
           'remove': FakeUnlink,
           'rename': FakeRename,
@@ -1622,6 +1630,8 @@ class HardenedModulesHook(object):
       module.__dict__.update(self._os.__dict__)
     elif submodule_fullname == 'ssl':
       pass
+    elif submodule_fullname == 'subprocess':
+      module = self.ImportStubModule(submodule_fullname)
     elif self.StubModuleExists(submodule_fullname):
       module = self.ImportStubModule(submodule_fullname)
     else:
